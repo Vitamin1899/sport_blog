@@ -7,13 +7,15 @@
 #= require_tree ./filters/main
 #= require_tree ./services/main
 
-# Creates new Angular module called 'sportBlog'
-sportBlog = angular.module('sportBlog',['ngRoute'])
+# Creates new Angular module called 'Blog'
+Blog = angular.module('Blog',['ngRoute'])
 
 # Sets up routing
-sportBlog.config(['$routeProvider', ($routeProvider) ->
+Blog.config(['$routeProvider', ($routeProvider) ->
   # Route for '/post'
-  $routeProvider.when('/post/:postId', { templateUrl: '../templates/mainPost.html', controller: 'PostCtrl' } )
+  $routeProvider
+    .when('/post/new', { templateUrl: '../templates/mainCreatePost.html', controller: 'CreatePostCtrl' } )
+    .when('/post/:postId', { templateUrl: '../templates/mainPost.html', controller: 'PostCtrl' } )
 
   # Default
   $routeProvider.otherwise({ templateUrl: '../templates/mainIndex.html', controller: 'IndexCtrl' } )
