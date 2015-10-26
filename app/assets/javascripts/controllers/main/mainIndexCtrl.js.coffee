@@ -1,5 +1,5 @@
 @IndexCtrl = ($scope, $location, $http, postData) ->
-
+#angular.module('myapp', []).controller 'IndexCtrl', ($scope) ->
   $scope.data = postData.data
 
   postData.loadPosts()

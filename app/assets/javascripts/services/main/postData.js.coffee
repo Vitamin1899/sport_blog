@@ -1,4 +1,4 @@
-angular.module('sportBlog').factory('postData', ['$http', ($http) ->
+angular.module('Blog').factory('postData', ['$http', ($http) ->
 
   postData =
     data:
@@ -13,7 +13,37 @@ angular.module('sportBlog').factory('postData', ['$http', ($http) ->
         console.log('Successfully loaded posts.')
       ).error( ->
         console.error('Failed to load posts.')
+        if deferred
+          deferred.resolve()
       )
+    else
+      if deferred
+        deferred.resolve()
+
+  postData.createPost = (newPost) ->
+    # Client-side data validation
+    if newPost.newPostTitle == '' or newPost.newPostContents == ''
+      alert('Neither the Title nor the Body are allowed to be left blank.')
+      return false
+
+    # Create data object to POST
+    data =
+      new_post:
+        title: newPost.newPostTitle
+        contents: newPost.newPostContents
+
+    # Do POST request to /posts.json
+    $http.post('./posts.json', data).success( (data) ->
+
+      # Add new post to array of posts
+      postData.data.posts.push(data)
+      console.log('Successfully created post.')
+
+    ).error( ->
+      console.error('Failed to create new post.')
+    )
+
+    return true
 
   return postData
 
