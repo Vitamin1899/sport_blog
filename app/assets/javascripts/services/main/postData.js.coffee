@@ -11,10 +11,12 @@ angular.module('Blog').factory('postData', ['$http', ($http) ->
         postData.data.posts = data
         postData.isLoaded = true
         console.log('Successfully loaded posts.')
+        if deferred
+          deferred.resolve()
       ).error( ->
         console.error('Failed to load posts.')
         if deferred
-          deferred.resolve()
+          deferred.reject('Failed to load posts.')
       )
     else
       if deferred
